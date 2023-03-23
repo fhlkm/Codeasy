@@ -1,8 +1,8 @@
-[2023-03-22 13:38:30] [L] galaxy property is null or empty 
-[2023-03-22 13:38:30] [L] Non-GB Project : Codease 
-[2023-03-22 13:38:30] [D] gradle projects loaded 
-[2023-03-22 13:38:30] [I] set common default repository : samsung maven 
-[2023-03-22 13:38:30] [I]     Default Repo : buildscript repository : http://10.252.250.53:8081/lm/content/groups/public/ 
-[2023-03-22 13:38:30] [I]     Default Repo : repository : http://10.252.250.53:8081/lm/content/groups/public/ 
-[2023-03-22 13:38:30] [I] set common default strategy 
-[2023-03-22 13:38:35] [D] gradle projects evaluated 
+[2023-03-23 15:52:29] [L] galaxy property is null or empty 
+[2023-03-23 15:52:29] [L] Non-GB Project : Codease 
+[2023-03-23 15:52:29] [D] gradle projects loaded 
+[2023-03-23 15:52:29] [I] set common default repository : samsung maven 
+[2023-03-23 15:52:29] [I]     Default Repo : buildscript repository : http://10.252.250.53:8081/lm/content/groups/public/ 
+[2023-03-23 15:52:29] [I]     Default Repo : repository : http://10.252.250.53:8081/lm/content/groups/public/ 
+[2023-03-23 15:52:29] [I] set common default strategy 
+[2023-03-23 15:52:31] [D] gradle projects evaluated 

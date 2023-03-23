@@ -52,7 +52,7 @@ tasks {
 
 dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("io.reactivex.rxjava3:rxjava:3.x.y")
+    implementation("io.reactivex.rxjava3:rxjava:3.0.13")
     // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
     implementation("com.squareup.okhttp3:okhttp:3.2.0")
 //    // https://mvnrepository.com/artifact/com.google.code.gson/gson

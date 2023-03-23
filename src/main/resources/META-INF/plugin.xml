@@ -31,9 +31,16 @@
                description="MyPlugin Toolbar Menu">
             <add-to-group group-id="MainMenu" anchor="last"/>
             <action id="MyAction"
-                    class="com.codease.codease.MyAction"
+                    class="com.codease.MyAction"
                     text="_MyAction"
                     description="MyAction"/>
+
+
+<!--            <action id="MyCustomDialogAction"-->
+<!--                    class="com.codease.codease.MyCustomDialog"-->
+<!--                    text="Show My Custom Dialog"-->
+<!--                    description="Show the custom dialog"/>-->
+
         </group>
     </actions>
 </idea-plugin>

@@ -1,18 +1,12 @@
-package com.codease.codease
+package com.codease
 
-import com.intellij.notification.NotificationDisplayType
-import com.intellij.notification.NotificationGroup
-import com.intellij.notification.NotificationType
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
-import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.command.WriteCommandAction
-
+import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.fileEditor.FileEditorManager
-
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.Messages
-import com.intellij.openapi.diagnostic.Logger
 
 
 class MyAction: AnAction() {
@@ -26,6 +20,26 @@ class MyAction: AnAction() {
 //                null
 //        ).notify(e.project)
         val project :Project?= e.project
+        if (project == null) {
+            Messages.showErrorDialog("Project not found.", "Error");
+            return;
+        }
+
+        // displayDialog(project)
+        //display customized dialog
+        displayMyDialog(project!!)
+
+    }
+
+    fun displayMyDialog(project:Project){
+        val dialog = MyCustomDialog()
+        dialog.show()
+
+        if (dialog.isOK) {
+            // Perform any actions when the user clicks the OK button.
+        }
+    }
+    fun displayDialog(project:Project){
         val message: String = "Please input the the requirement to generate your code:"
         val defaultText: String = "N/A"
         val userInput: String? = Messages.showInputDialog(
@@ -51,7 +65,6 @@ class MyAction: AnAction() {
             Messages.showMessageDialog(project, "You canceled or closed the dialog", "Result", Messages.getInformationIcon())
             LOG.info(TAG+"You canceled or closed the dialog")
         }
-
     }
 
     fun insertMessageAtCursorLocation(project:Project,msg:String){
@@ -69,6 +82,8 @@ class MyAction: AnAction() {
         }
 
     }
+
+
 
 
 }
