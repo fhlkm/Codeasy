@@ -32,7 +32,7 @@
             <add-to-group group-id="MainMenu" anchor="last"/>
             <action id="MyAction"
                     class="com.codease.MyAction"
-                    text="_MyAction"
+                    text="Codease"
                     description="MyAction"/>
 
 

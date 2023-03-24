@@ -30,42 +30,6 @@ class HttpManager {
 }
 
 fun  main(){
-    sendPost()
+//    sendPost()
     Thread.sleep(30000)
 }
-fun sendPost() {
-
-
-    val request  = OpenAIRequestBody(
-        model = "text-davinci-003",
-        prompt ="write a broadcastreceiver in android",
-        temperature = 0.7,
-        max_tokens = 256,
-        top_p = 1,
-        frequency_penalty = 0,
-        presence_penalty = 0
-    )
-    RetrofitClient.apiService.createPost(request)
-        .subscribeOn(Schedulers.io())
-        .subscribe(object : Observer<OpenAIRequestBodyResponse> {
-            override fun onSubscribe(d: Disposable) {
-                // Handle the subscription
-            }
-
-            override fun onNext(t: OpenAIRequestBodyResponse) {
-                // Handle the response
-                println("Response: $t")
-            }
-
-            override fun onError(e: Throwable) {
-                // Handle the error
-                println("Error: ${e.message}")
-            }
-
-            override fun onComplete() {
-                // Handle the completion
-                println("Request completed")
-            }
-        })
-}
-

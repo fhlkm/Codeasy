@@ -8,12 +8,17 @@ import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.Messages
 
+// Process to build plugin (.jar)
+// File--Project Structure----Artifact----'+'---------jar---from modules with dependency---select modules(main class can be empty).
+// build--build Artifacts---jar is in directory "codease\github\build\idea-sandbox\plugins\Codease\lib"
 
-class MyAction: AnAction() {
+class MyAction: AnAction(), PrintAnswerListener {
     private val LOG = Logger.getInstance(MyAction::class.java)
     val TAG="MyAction"
+    var project :Project?=null
+    var code:String?=null
     override fun actionPerformed(e: AnActionEvent) {
-        val project :Project?= e.project
+        project = e.project
         if (project == null) {
             Messages.showErrorDialog("Project not found.", "Error");
             return;
@@ -25,10 +30,24 @@ class MyAction: AnAction() {
 
     fun displayMyDialog(project:Project){
         val dialog = MyCustomDialog()
+        dialog.answerListener = this
         dialog.show()
 
         if (dialog.isOK) {
             // Perform any actions when the user clicks the OK button.
+            try{
+                if(project!=null&& code!=null ) {
+                    insertMessageAtCursorLocation(project!!, code!!)
+                }else{
+                    if(null == project)
+                    LOG.info(TAG+"project   is NULL")
+
+                    if(null == code)
+                        LOG.info(TAG+"code   is NULL")
+                }
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
         }
     }
 
@@ -41,9 +60,15 @@ class MyAction: AnAction() {
             document.insertString(offset, msg)
         }
 
+
+    }
+
+    override fun printAnswer(answer: String) {
+        code=answer
     }
 
 
-
-
+}
+interface PrintAnswerListener{
+    fun printAnswer(answer:String)
 }
