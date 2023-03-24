@@ -2,40 +2,70 @@ package com.connection
 
 
 
-import com.data.PostData
+import com.data.OpenAIRequestBody
+import com.data.OpenAIRequestBodyResponse
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 class HttpManager {
 
+    /**
+    https://api.openai.com/v1/completions
 
-    fun sendPost() {
-        val postData = PostData("My Title", "My Body", 1)
-
-        RetrofitClient.apiService.createPost(postData)
-            .subscribeOn(Schedulers.io())
-            .subscribe(object : Observer<PostData> {
-                override fun onSubscribe(d: Disposable) {
-                    // Handle the subscription
-                }
-
-                override fun onNext(t: PostData) {
-                    // Handle the response
-                    println("Response: $t")
-                }
-
-                override fun onError(e: Throwable) {
-                    // Handle the error
-                    println("Error: ${e.message}")
-                }
-
-                override fun onComplete() {
-                    // Handle the completion
-                    println("Request completed")
-                }
-            })
-    }
-
+    curl https://api.openai.com/v1/completions \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer $OPENAI_API_KEY" \
+    -d '{
+    "model": "text-davinci-003",
+    "prompt": "write a boradcastreceiver in android\n\n\n\nimport android.content.BroadcastReceiver;\nimport android.content.Context;\nimport android.content.Intent;\n\npublic class MyReceiver extends BroadcastReceiver {\n\n    @Override\n    public void onReceive(Context context, Intent intent) {\n        if (intent.getAction().equals(\"myAction\")) {\n            // do something\n        }\n    }\n}\nregister above class in AndroidManfiest.xml\n<receiver android:name=\".MyReceiver\">\n    <intent-filter>\n        <action android:name=\"myAction\" />\n    </intent-filter>\n</receiver>\nwrite a sample using MyReceiver\n\nIntent intent = new Intent(\"myAction\");\nintent.putExtra(\"myData\", \"myValue\");\ncontext.sendBroadcast(intent);",
+    "temperature": 0.7,
+    "max_tokens": 256,
+    "top_p": 1,
+    "frequency_penalty": 0,
+    "presence_penalty": 0
+    }'
+     */
 
 
 }
+
+fun  main(){
+    sendPost()
+    Thread.sleep(30000)
+}
+fun sendPost() {
+
+
+    val request  = OpenAIRequestBody(
+        model = "text-davinci-003",
+        prompt ="write a broadcastreceiver in android",
+        temperature = 0.7,
+        max_tokens = 256,
+        top_p = 1,
+        frequency_penalty = 0,
+        presence_penalty = 0
+    )
+    RetrofitClient.apiService.createPost(request)
+        .subscribeOn(Schedulers.io())
+        .subscribe(object : Observer<OpenAIRequestBodyResponse> {
+            override fun onSubscribe(d: Disposable) {
+                // Handle the subscription
+            }
+
+            override fun onNext(t: OpenAIRequestBodyResponse) {
+                // Handle the response
+                println("Response: $t")
+            }
+
+            override fun onError(e: Throwable) {
+                // Handle the error
+                println("Error: ${e.message}")
+            }
+
+            override fun onComplete() {
+                // Handle the completion
+                println("Request completed")
+            }
+        })
+}
+
