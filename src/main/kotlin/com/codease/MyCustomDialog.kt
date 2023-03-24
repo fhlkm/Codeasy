@@ -16,6 +16,10 @@ import javax.swing.JComponent
 import javax.swing.JPanel
 import javax.swing.JTextArea
 import com.intellij.openapi.diagnostic.Logger
+import javax.swing.text.AbstractDocument
+import javax.swing.text.AttributeSet
+import javax.swing.text.BadLocationException
+import javax.swing.text.DocumentFilter
 
 class MyCustomDialog : DialogWrapper(true) {
     private var mainPanel: JPanel? = null
@@ -24,16 +28,19 @@ class MyCustomDialog : DialogWrapper(true) {
     private var submit :JButton? = null
     var answerListener:PrintAnswerListener?=null
     private val LOG = Logger.getInstance(MyCustomDialog::class.java)
+    val TEXT_LENGTH=100
     init {
         init()
-        title = "My Custom Dialog"
+        title = "Codease"
     }
 
 
     override fun createCenterPanel(): JComponent? {
         mainPanel = JPanel(BorderLayout())
-        inputTextArea = JTextArea(2, 100)
-        outputTextArea = JTextArea(20, 100)
+        inputTextArea = JTextArea(5, TEXT_LENGTH)
+        inputTextArea!!.setLineWrap(true);
+        inputTextArea!!.setWrapStyleWord(false);
+        outputTextArea = JTextArea(20, TEXT_LENGTH)
         submit = JButton ("Submit")
         outputTextArea!!.isEditable = false
         val framePanel = JPanel(GridLayout())
@@ -122,6 +129,5 @@ class MyCustomDialog : DialogWrapper(true) {
             })
     }
 
-
-
 }
+
