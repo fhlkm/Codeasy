@@ -15,7 +15,7 @@ import javax.swing.JButton
 import javax.swing.JComponent
 import javax.swing.JPanel
 import javax.swing.JTextArea
-
+import com.intellij.openapi.diagnostic.Logger
 
 class MyCustomDialog : DialogWrapper(true) {
     private var mainPanel: JPanel? = null
@@ -23,7 +23,7 @@ class MyCustomDialog : DialogWrapper(true) {
     private var outputTextArea: JTextArea? = null
     private var submit :JButton? = null
     var answerListener:PrintAnswerListener?=null
-
+    private val LOG = Logger.getInstance(MyCustomDialog::class.java)
     init {
         init()
         title = "My Custom Dialog"
@@ -112,7 +112,7 @@ class MyCustomDialog : DialogWrapper(true) {
                 override fun onError(e: Throwable) {
                     // Handle the error
                     outputTextArea!!.text = "Internet Error"
-                    println("Error: ${e.message}")
+                    LOG.error(e)
                 }
 
                 override fun onComplete() {
