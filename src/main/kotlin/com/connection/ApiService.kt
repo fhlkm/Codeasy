@@ -8,7 +8,10 @@ import retrofit2.http.Headers
 import retrofit2.http.POST
 
 interface ApiService {
-    @Headers("Authorization: Bearer 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")
+
+
+
+    @Headers("Authorization: Bearer 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")
     @POST("/v1/completions")
     fun createPost(@Body postData: OpenAIRequestBody): Observable<OpenAIRequestBodyResponse>
 }
