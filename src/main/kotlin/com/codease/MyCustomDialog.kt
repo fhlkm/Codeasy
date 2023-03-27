@@ -20,15 +20,19 @@ import javax.swing.text.AbstractDocument
 import javax.swing.text.AttributeSet
 import javax.swing.text.BadLocationException
 import javax.swing.text.DocumentFilter
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
+import org.fife.ui.rtextarea.RTextScrollPane;
 
 class MyCustomDialog : DialogWrapper(true) {
     private var mainPanel: JPanel? = null
     private var inputTextArea: JTextArea? = null
-    private var outputTextArea: JTextArea? = null
+//    private var outputTextArea: JTextArea? = null
+    private var outputTextArea: RSyntaxTextArea? = null
     private var submit :JButton? = null
     var answerListener:PrintAnswerListener?=null
     private val LOG = Logger.getInstance(MyCustomDialog::class.java)
-    val TEXT_LENGTH=100
+    val TEXT_LENGTH=50
     init {
         init()
         title = "Codease"
@@ -40,7 +44,10 @@ class MyCustomDialog : DialogWrapper(true) {
         inputTextArea = JTextArea(5, TEXT_LENGTH)
         inputTextArea!!.setLineWrap(true);
         inputTextArea!!.setWrapStyleWord(false);
-        outputTextArea = JTextArea(20, TEXT_LENGTH)
+//        outputTextArea = JTextArea(20, TEXT_LENGTH)
+        outputTextArea= RSyntaxTextArea(20, TEXT_LENGTH)
+        outputTextArea!!.syntaxEditingStyle = SyntaxConstants.SYNTAX_STYLE_JAVA;
+        outputTextArea!!.isCodeFoldingEnabled = true;
         submit = JButton ("Submit")
         outputTextArea!!.isEditable = false
         val framePanel = JPanel(GridLayout())
