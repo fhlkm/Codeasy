@@ -1,28 +1,61 @@
 plugins {
     id("java")
     id("org.jetbrains.kotlin.jvm") version "1.7.20"
-    id("org.jetbrains.intellij") version "1.12.0"
+    id("org.jetbrains.intellij") version "1.13.2"
+
+    id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
 group = "com.codease"
 version = "1.0-SNAPSHOT"
 
+
 repositories {
     mavenCentral()
 }
+
+configurations {
+    create("pluginImplementation") {
+        extendsFrom(implementation.get())
+        isCanBeResolved = true
+    }
+}
+
+
+tasks.shadowJar {
+    archiveBaseName.set("com.codease.Codease")
+    archiveClassifier.set("")
+    archiveVersion.set("1.0.0")
+    manifest {
+        attributes["Plugin-Version"] = project.version.toString()
+    }
+
+
+    configurations = listOf(project.configurations.getByName("pluginImplementation"))
+    mergeServiceFiles()
+}
+
 
 // Configure Gradle IntelliJ Plugin
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
 intellij {
     version.set("2022.1.4")
     type.set("IC") // Target IDE Platform
-
+    pluginName.set("Codease")
+//    updateSinceUntilBuild(false)
     plugins.set(listOf(/* Plugin Dependencies */))
 
 //    alternativeIdePath.set("C:/Program Files/Android/Android Studio/bin/studio64.exe")
 
 
 }
+
+//intellij {
+//    setInstrumentCode(false)
+//    publish {
+//        pluginJar.set(tasks.shadowJar.get().archiveFile.get().asFile)
+//    }
+//}
 
 tasks {
     // Set the JVM compatibility versions
@@ -70,3 +103,4 @@ dependencies {
 
 
 }
+
