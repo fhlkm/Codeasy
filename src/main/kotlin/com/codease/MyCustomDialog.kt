@@ -50,7 +50,7 @@ class MyCustomDialog : DialogWrapper(true) {
         outputTextArea!!.isCodeFoldingEnabled = true;
         submit = JButton ("Submit")
         outputTextArea!!.isEditable = false
-        val framePanel = JPanel(GridLayout())
+        val framePanel = JPanel(GridBagLayout())
         /**********************weight of inputTextArea: sumbit =5:1****************************************/
         var textPanel = JPanel(GridBagLayout())
         var gridBagConstraints = GridBagConstraints()
