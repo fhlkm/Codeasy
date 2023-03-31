@@ -3,26 +3,20 @@ package com.codease
 import com.connection.RetrofitClient
 import com.data.OpenAIRequestBody
 import com.data.OpenAIRequestBodyResponse
+import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.openapi.ui.ValidationInfo
 import com.intellij.ui.components.JBScrollPane
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import java.awt.*
-import java.awt.event.ActionListener
-import javax.swing.JButton
-import javax.swing.JComponent
-import javax.swing.JPanel
-import javax.swing.JTextArea
-import com.intellij.openapi.diagnostic.Logger
-import javax.swing.text.AbstractDocument
-import javax.swing.text.AttributeSet
-import javax.swing.text.BadLocationException
-import javax.swing.text.DocumentFilter
-import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
-import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
-import org.fife.ui.rtextarea.RTextScrollPane;
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea
+import org.fife.ui.rsyntaxtextarea.SyntaxConstants
+import java.awt.BorderLayout
+import java.awt.GridBagConstraints
+import java.awt.GridBagLayout
+import javax.swing.*
+
 
 class MyCustomDialog : DialogWrapper(true) {
     private var mainPanel: JPanel? = null
@@ -33,6 +27,11 @@ class MyCustomDialog : DialogWrapper(true) {
     var answerListener:PrintAnswerListener?=null
     private val LOG = Logger.getInstance(MyCustomDialog::class.java)
     val TEXT_LENGTH=50
+    val list: MutableList<JCheckBox> = ArrayList()
+    lateinit var refactorCheckBox:JCheckBox
+    lateinit var testCheckBox:JCheckBox
+    val refactorPrefix="Please Refactor below code: \n";
+    val testPrefix="Please write Unit Test for below code: \n";
     init {
         init()
         title = "Codease"
@@ -65,6 +64,32 @@ class MyCustomDialog : DialogWrapper(true) {
         gridBagConstraints.gridy = 0
         gridBagConstraints.weightx = 1.0
 
+        //Create checkbox object and add it in the panel
+        refactorCheckBox = JCheckBox("Reactor")
+        framePanel.add(refactorCheckBox,gridBagConstraints)
+        list.add(refactorCheckBox);
+        refactorCheckBox.addActionListener {
+            if (refactorCheckBox.isSelected) {
+                unCheckAll()
+                refactorCheckBox.isSelected = true
+            }
+        }
+        gridBagConstraints.gridx = 2//
+        gridBagConstraints.gridy = 0
+        gridBagConstraints.weightx = 1.0
+        testCheckBox = JCheckBox("UTest")
+        framePanel.add(testCheckBox,gridBagConstraints)
+        list.add(testCheckBox);
+        testCheckBox.addActionListener {
+            if (testCheckBox.isSelected) {
+                unCheckAll()
+                testCheckBox.isSelected = true
+            }
+        }
+
+        gridBagConstraints.gridx = 3//
+        gridBagConstraints.gridy = 0
+        gridBagConstraints.weightx = 1.0
         framePanel.add(submit,gridBagConstraints)
         /**********************weight of inputTextArea: sumbit =5:1****************************************/
 
@@ -83,18 +108,32 @@ class MyCustomDialog : DialogWrapper(true) {
         /**********************weight of framePanel: outputTextArea =1:5****************************************/
         mainPanel!!.add(textPanel, BorderLayout.CENTER)
         submit!!.addActionListener {
-            outputTextArea!!.text="Generating..."
-            val searchCommand = inputTextArea!!.text
+            var searchCommand = inputTextArea!!.text
+
+            if(refactorCheckBox.isSelected)
+            {
+                searchCommand=refactorPrefix+searchCommand
+            }
+            else if(testCheckBox.isSelected)
+            {
+                searchCommand=testPrefix+searchCommand
+            }
+
+            if(inputTextArea!!.text!=null && inputTextArea!!.text.isNotEmpty()){
+                outputTextArea!!.text="Generating..."
+            }
+
             sendPost(searchCommand)
         }
         return mainPanel
     }
 
 
-    override fun doValidate(): ValidationInfo? {
-        // Add any validation rules if needed.
-        return null
-    } // Implement any action listeners for the buttons if needed.
+    fun unCheckAll() {
+        for (checkBox in list) {
+            checkBox.isSelected = false
+        }
+    }
 
 
     fun sendPost(command:String) {
