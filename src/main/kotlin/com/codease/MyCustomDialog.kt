@@ -5,7 +5,6 @@ import com.data.OpenAIRequestBody
 import com.data.OpenAIRequestBodyResponse
 import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.ui.DialogWrapper
-import com.intellij.openapi.ui.ValidationInfo
 import com.intellij.ui.components.JBScrollPane
 import io.reactivex.rxjava3.core.Observer
 import io.reactivex.rxjava3.disposables.Disposable
@@ -141,7 +140,8 @@ class MyCustomDialog : DialogWrapper(true) {
 
         val request  = OpenAIRequestBody(
             model = "text-davinci-003",
-            prompt =command,
+
+            message = arrayOf(),
             temperature = 0.7,
             max_tokens = 512,
             top_p = 1,

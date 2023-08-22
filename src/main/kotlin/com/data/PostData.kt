@@ -17,13 +17,16 @@ import com.google.gson.annotations.SerializedName
  */
 data class OpenAIRequestBody(
     val model: String,
-    val prompt: String,
+    val message:Array<MessageItem>,
     val temperature: Double,
     val max_tokens: Int,
     val top_p: Int,
     val frequency_penalty: Int,
     val presence_penalty: Int
 )
+
+
+data class MessageItem(val role:String,val content:String)
 
 
 
