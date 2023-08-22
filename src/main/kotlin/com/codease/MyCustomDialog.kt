@@ -141,7 +141,7 @@ class MyCustomDialog : DialogWrapper(true) {
         val request  = OpenAIRequestBody(
             model = "text-davinci-003",
 
-            message = arrayOf(),
+            messages = arrayOf(),
             temperature = 0.7,
             max_tokens = 512,
             top_p = 1,
@@ -157,9 +157,9 @@ class MyCustomDialog : DialogWrapper(true) {
 
                 override fun onNext(t: OpenAIRequestBodyResponse) {
                     // Handle the response
-                    outputTextArea!!.text = t.choices[0].text
-                    answerListener?.printAnswer(t.choices[0].text!!)
-                    println("Response: $t")
+//                    outputTextArea!!.text = t.choices[0].text
+//                    answerListener?.printAnswer(t.choices[0].text!!)
+                    println("Response from chatgpt, user command is: ${t.choices[0].message?.content}")
                 }
 
                 override fun onError(e: Throwable) {

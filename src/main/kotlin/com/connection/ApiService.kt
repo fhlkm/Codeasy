@@ -12,6 +12,6 @@ interface ApiService {
 
 
     @Headers("Authorization: Bearer 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")
-    @POST("/v1/completions")
+    @POST("/v1/chat/completions")
     fun createPost(@Body postData: OpenAIRequestBody): Observable<OpenAIRequestBodyResponse>
 }

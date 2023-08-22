@@ -17,7 +17,7 @@ import com.google.gson.annotations.SerializedName
  */
 data class OpenAIRequestBody(
     val model: String,
-    val message:Array<MessageItem>,
+    val messages:Array<MessageItem>,
     val temperature: Double,
     val max_tokens: Int,
     val top_p: Int,
@@ -32,26 +32,27 @@ data class MessageItem(val role:String,val content:String)
 
 data class OpenAIRequestBodyResponse (
 
+
+
+
     @SerializedName("id"      ) var id      : String?            = null,
-    @SerializedName("object"  ) var mObject  : String?            = null,
-    @SerializedName("created" ) var created : Int?               = null,
-    @SerializedName("model"   ) var model   : String?            = null,
-    @SerializedName("choices" ) var choices : ArrayList<Choices> = arrayListOf(),
-    @SerializedName("usage"   ) var usage   : Usage?             = Usage()
+@SerializedName("object"  ) var mobject  : String?            = null,
+@SerializedName("created" ) var created : Int?               = null,
+@SerializedName("model"   ) var model   : String?            = null,
+@SerializedName("choices" ) var choices : ArrayList<Choices> = arrayListOf(),
+@SerializedName("usage"   ) var usage   : Usage?             = Usage()
 
 )
+
 
 
 data class Choices (
 
-    @SerializedName("text"          ) var text         : String? = null,
-    @SerializedName("index"         ) var index        : Int?    = null,
-    @SerializedName("logprobs"      ) var logprobs     : String? = null,
-    @SerializedName("finish_reason" ) var finishReason : String? = null
+    @SerializedName("index"         ) var index        : Int?     = null,
+    @SerializedName("message"       ) var message      : MessageItem? = null,
+    @SerializedName("finish_reason" ) var finishReason : String?  = null
 
 )
-
-
 
 data class Usage (
 
@@ -60,3 +61,4 @@ data class Usage (
     @SerializedName("total_tokens"      ) var totalTokens      : Int? = null
 
 )
+

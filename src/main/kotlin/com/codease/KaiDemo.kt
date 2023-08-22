@@ -25,7 +25,7 @@ fun sendPost(command:String) {
     val messageTwo=MessageItem(Constants.systemUser,command)
     val request  = OpenAIRequestBody(
         model = Constants.model,
-        message = arrayOf(messageOne,messageTwo),
+        messages = arrayOf(messageOne,messageTwo),
         temperature = 1.0,
         max_tokens = 256,
         top_p = 1,
@@ -43,7 +43,7 @@ fun sendPost(command:String) {
             override fun onNext(t: OpenAIRequestBodyResponse) {
                 // Handle the response
 
-                println("Response: $t")
+                println("Response from chatgpt, user command is: ${t.choices[0].message?.content}")
             }
 
             override fun onError(e: Throwable) {
@@ -57,5 +57,5 @@ fun sendPost(command:String) {
             }
         })
 
-    Thread.sleep(5000)
+    Thread.sleep(2000)
 }
